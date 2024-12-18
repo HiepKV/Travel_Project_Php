@@ -56,20 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $result = $stmt->get_result();
-
+        
         if ($result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            $account_id = $row['AccountID'];
-
-            // Tạo token reset password
-            $token = bin2hex(random_bytes(32));
-            $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
-
-            $stmt = $conn->prepare("UPDATE account SET reset_token = ?, token_expiry = ? WHERE AccountID = ?");
-            $stmt->bind_param("ssi", $token, $expiry, $account_id);
-            $stmt->execute();
-
-            // Chuyển sang form nhập mật khẩu mới
+            $_SESSION['email'] = $_POST['email'];
             header("Location: ?token=$token");
             exit();
         } else {
@@ -79,7 +68,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $token = $_POST['token'];
         $new_password = $_POST['password'];
 
-        // Kiểm tra độ mạnh mật khẩu
         $passwordErrors = validatePassword($new_password);
         if (!empty($passwordErrors)) {
             echo "<p>Lỗi mật khẩu:</p><ul>";
@@ -89,29 +77,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "</ul>";
         } else {
             $hashed_password = password_hash($new_password, PASSWORD_DEFAULT);
+            $email = $_SESSION['email'];
+            $update_query = "UPDATE account SET Password = ? WHERE email = ?";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bind_param("ss", $hashed_password, $email);
 
-            $stmt = $conn->prepare("SELECT AccountID FROM account WHERE reset_token = ? AND token_expiry > NOW()");
-            $stmt->bind_param("s", $token);
-            $stmt->execute();
-            $result = $stmt->get_result();
-
-            if ($result->num_rows > 0) {
-                $row = $result->fetch_assoc();
-                $account_id = $row['AccountID'];
-
-                // Mật khẩu mới không được trùng mật khẩu cũ
-                if (isNewPasswordDifferent($conn, $account_id, $new_password)) {
-                    $stmt = $conn->prepare("UPDATE account SET Password = ?, reset_token = NULL, token_expiry = NULL WHERE AccountID = ?");
-                    $stmt->bind_param("si", $hashed_password, $account_id);
-                    $stmt->execute();
-
-                    header("Location: login.php");
-                    exit();
-                } else {
-                    echo "<p>Mật khẩu mới không được trùng với mật khẩu cũ!</p>";
-                }
+            if ($update_stmt->execute()) {
+                header("Location: ./login.php");
+                exit();
             } else {
-                echo "<p>Token không hợp lệ hoặc đã hết hạn.</p>";
+                $error = "Có lỗi xảy ra. Vui lòng thử lại.";
             }
         }
     }
