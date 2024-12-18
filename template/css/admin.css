@@ -1,0 +1,90 @@
+/* General body styling */
+body.admin-dashboard-body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+/* Header Styling */
+header.admin-header {
+    background-color: #343a40;
+    color: #ffffff;
+    padding: 20px;
+    text-align: center;
+}
+
+h1.admin-title {
+    font-size: 36px;
+    margin: 0;
+}
+
+p.admin-welcome-message {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+span.admin-name {
+    font-weight: bold;
+    color: #ed0080; /* Color used in your design */
+}
+
+/* Navigation Styling */
+nav.admin-nav {
+    background-color: #495057;
+    padding: 10px 0;
+}
+
+ul.admin-nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+}
+
+li.admin-nav-item {
+    margin: 0 15px;
+}
+
+a.admin-nav-item {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: 18px;
+    font-weight: bold;
+    display: block;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+a.admin-nav-item:hover {
+    background-color: #ed0080; /* Hover effect with your design color */
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header.admin-header {
+        padding: 15px;
+    }
+
+    h1.admin-title {
+        font-size: 28px;
+    }
+
+    p.admin-welcome-message {
+        font-size: 16px;
+    }
+
+    ul.admin-nav-list {
+        flex-direction: column;
+    }
+
+    li.admin-nav-item {
+        margin: 10px 0;
+    }
+
+    a.admin-nav-item {
+        font-size: 16px;
+    }
+}

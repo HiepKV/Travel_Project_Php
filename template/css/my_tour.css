@@ -1,0 +1,83 @@
+
+/* Body */
+.my-tour-page {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Container chính */
+.my-tour-container {
+    width: 80%;
+    max-width: fit-content;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề trang */
+.my-tour-title {
+    text-align: center;
+    color: #ed0080; /* Màu chính của bạn */
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+/* Bảng thông tin tour */
+.my-tour-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.my-tour-table th, .my-tour-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    z-index: 1000;
+}
+
+/* Tiêu đề của các cột */
+.my-tour-table th {
+    background-color: #ed0080; /* Màu nền tiêu đề bảng */
+    color: white;
+}
+
+/* Dòng lạ (odd row) để dễ phân biệt */
+.my-tour-table tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+tbody {
+    display: table-row-group;  /* Đảm bảo sử dụng display mặc định */
+    height: auto;  /* Chiều cao tự động */
+    min-height: 1px;  /* Đảm bảo chiều cao tối thiểu */
+}
+
+/* Dòng khi di chuột qua */
+.my-tour-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Link quay lại */
+.my-tour-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ed0080;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 8px 16px;
+    border: 2px solid #ed0080;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+/* Hover effect cho link */
+.my-tour-link:hover {
+    background-color: #ed0080;
+    color: white;
+}

@@ -1,0 +1,292 @@
+:root {
+    --primary-color: #1A5F7A;
+    --secondary-color: #159895;
+    --accent-color: #57C5B6;
+    --light-background: #F8F9FA;
+    --text-color: #333;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--light-background);
+}
+
+/* Header */
+header {
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+#banner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.logo img {
+    max-height: 80px;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.web_name {
+    text-align: left;
+}
+
+.web_name h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: #8cded3;
+}
+
+.web_name p {
+    font-style: italic;
+    color: rgba(190, 231, 231, 0.9);
+    font-size: 0.9em;
+}
+/* Refined Menu */
+.menu{
+    position: relative;
+}
+.menu ul {
+    display: flex;
+    list-style: none;
+    gap: 25px;
+}
+
+.menu ul li a {
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.menu ul li a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -5px;
+    left: 0;
+    background-color: var(--accent-color);
+    transition: width 0.3s ease;
+}
+
+.menu ul li a:hover {
+    color: var(--accent-color);
+}
+
+.menu ul li a:hover::after {
+    width: 100%;
+}
+ul #menu {
+    position: relative;
+}
+
+ul.submenu {
+    display: none;  
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    background-color: #8cded3;  
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2); 
+    padding: 10px 0;
+    border-radius: 10%;
+    z-index: 1;  
+}
+
+
+li:hover > ul.submenu {
+    display: block; 
+}
+
+ul.submenu li {
+    padding: 10px 20px;
+    white-space: nowrap;
+}
+
+
+ul.submenu li a {
+    display: block;
+    text-decoration: none;
+    color: #fff; 
+    font-size: 14px;
+}
+
+
+ul.submenu li a:hover {
+    color: #159895;
+}
+
+#menu a.user-icon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+#menu a.user-icon i {
+    font-size: 20px;
+}
+
+/* Sophisticated Account Form */
+
+
+/* Regional Navigation with Travel Vibes */
+.bamien {
+    background-color: #f1f1f1;
+    padding: 15px 0;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.bamien div {
+    margin: 0 20px;
+}
+
+.bamien a {
+    text-decoration: none;
+    color: var(--primary-color);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.bamien a::before {
+    content: '✈';
+    position: absolute;
+    left: -25px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.bamien a:hover {
+    color: var(--secondary-color);
+}
+
+.bamien a:hover::before {
+    opacity: 1;
+    left: -30px;
+}
+.form_Account {
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    width: 300px;
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    padding: 25px;
+    z-index: 1000;
+    border: 1px solid rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.form_Account button {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.form_Account button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.form_Account p {
+    text-align: center;
+    color: #666;
+    margin-top: 15px;
+}
+
+.form_Account a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 600;
+}
+
+@media screen and (max-width: 768px) {
+    #banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bamien {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bamien div {
+        margin: 10px 0;
+    }
+}
+@media screen and (max-width: 768px) {
+    #banner {
+        flex-direction: column;
+        text-align: center;
+        padding: 15px;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bamien {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .bamien div {
+        margin: 10px 0;
+    }
+
+}

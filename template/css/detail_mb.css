@@ -1,0 +1,207 @@
+.content {
+    width: 100%;
+    display: flex;
+    height: auto;
+    padding: 15px; /* Giảm padding */
+    background-color: #f8f9fa;
+    gap: 15px; /* Giảm khoảng cách giữa các cột */
+    max-width: 1200px; /* Giới hạn chiều rộng tối đa */
+    margin: 0 auto; /* Căn giữa trang */
+}
+
+.content #trai {
+    width: 65%; /* Giảm nhẹ chiều rộng cột trái */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    padding: 20px;
+    border: 1px solid #e9ecef;
+}
+
+.content #phai {
+    width: 35%; /* Giảm nhẹ chiều rộng cột phải */
+    background-color: white;
+    z-index: 10;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+    position: sticky;
+    top: 15px;
+    border: 1px solid #e9ecef;
+}
+
+.product-name h3 {
+    color: #ed0080;
+    font-weight: 700;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: left !important;
+    border-bottom: 3px solid #ed0080;
+    padding-bottom: 10px;
+}
+
+.product-img img {
+    max-height: 350px; /* Giới hạn chiều cao hình ảnh */
+    width: 100%;
+    object-fit: cover; /* Đảm bảo hình ảnh không bị biến dạng */
+    margin-left: 0px !important;
+    border-radius: 10px;
+}
+
+.product-img img:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.product {
+    margin: 10px 0;
+    padding: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+@media screen and (max-width: 992px) {
+    .content {
+        flex-direction: column;
+        padding: 10px;
+    }
+
+    .content #trai,
+    .content #phai {
+        width: 100%;
+        position: static;
+    }
+}
+.product:last-child {
+    border-bottom: none;
+}
+
+.product label {
+    color: #ed0080;
+    font-weight: 600;
+}
+
+#form_xacnhan {
+    width: 100%;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 25px;
+    background-color: #fff;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+#button123 {
+    width: 100%;
+    height: 55px;
+    border-radius: 8px;
+    background-color: #ed0080;
+    border: none;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#button123:hover {
+    background-color: #ff1a94;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(237, 0, 128, 0.4);
+}
+
+#form_feedback {
+    width: 100%;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    padding: 25px;
+    background-color: #fff;
+    margin-top: 25px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.05);
+}
+
+#feedback {
+    width: 100%;
+    height: 200px;
+    resize: none;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 15px;
+    font-size: 16px;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+
+#feedback:focus {
+    border-color: #ed0080;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(237, 0, 128, 0.2);
+}
+
+#button12345 {
+    width: 100%;
+    height: 55px;
+    background-color: #ed0080;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#button12345:hover {
+    background-color: #ff1a94;
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(237, 0, 128, 0.4);
+}
+
+/* Responsive Design */
+@media screen and (max-width: 768px) {
+    .content {
+        flex-direction: column;
+        padding: 15px;
+        gap: 20px;
+    }
+
+    .content #trai,
+    .content #phai {
+        width: 100%;
+        position: static;
+    }
+}
+
+/* Additional Travel Theme Enhancements */
+.product h4 {
+    color: #ed0080 !important;
+    border-left: 4px solid #ed0080;
+    padding-left: 10px;
+    text-align: left !important;
+}
+
+.confirm {
+    margin-top: 15px;
+}
+
+.confirm label {
+    color: #ed0080;
+    font-weight: 600;
+}
+
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+select:focus {
+    border-color: #ed0080;
+    outline: none;
+    /* box-shadow: 0 0 0 3px rgba(237, 0, 128, 0.2); */
+}

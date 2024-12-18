@@ -1,0 +1,93 @@
+:root {
+    --primary-color: #2C5F6B;     /* Softened blue-green */
+    --secondary-color: #3A7C8C;   /* Slightly deeper shade */
+    --accent-color: #4BA8B5;      /* Lighter, more muted accent */
+    --light-background: #F4F6F7;  /* Slightly cooler light background */
+    --text-color: #2C3E50;        /* Deeper, more sophisticated gray */
+}
+
+.footer {
+    height: 200px;
+    background-color: #2C3E50;    /* Deep, subdued background */
+    color: #E0E6E9;               /* Soft, light text */
+    padding-top: 30px;            /* Slightly reduced padding */
+}
+
+.footer h2 {
+    color: #4BA8B5;               /* Softer accent color for headings */
+    font-size: 1.2rem;             /* Reduced font size */
+    font-weight: 500;              /* Lighter font weight */
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-around;
+    max-width: 1100px;             /* Slightly narrower container */
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.footer-section {
+    flex: 1;
+    padding: 0 15px;               /* Reduced padding */
+    min-width: 200px;              /* Slightly narrower sections */
+}
+
+.footer-section.about p,
+.footer-section.contact p {
+    color: #8A9BA8;                /* Softer, more muted text color */
+    font-size: 0.9rem;              /* Smaller font size */
+}
+
+.footer-section h3 {
+    border-bottom: 1px solid #4BA8B5;  /* Thinner, softer border */
+    padding-bottom: 8px;           /* Reduced padding */
+    margin-bottom: 15px;            /* Reduced margin */
+    font-size: 1rem;               /* Smaller font size */
+    color: #4BA8B5;                /* Softer accent color */
+}
+
+.footer-section.links ul {
+    list-style: none;
+    padding: 0;                    /* Remove default padding */
+}
+
+.footer-section.links ul li a {
+    color: #8A9BA8;                /* Muted link color */
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;              /* Smaller font size */
+}
+
+.footer-section.links ul li a:hover {
+    color: #4BA8B5;                /* Softer hover effect */
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: center;
+                   /* Reduced margin */
+    color: #B0BEC5;                 /* Softer text color */
+    text-align: center;
+    padding: 15px 0;                /* Reduced padding */
+    background-color: #34495E;      /* Darker, more subdued background */
+    font-size: 0.8rem;              /* Smaller font size */
+}
+
+.footer-bottom p {
+    text-align: center;
+}
+
+/* Responsive Design */ 
+@media screen and (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .footer-section {
+        margin-bottom: 20px;        /* Reduced margin */
+        text-align: center;          /* Center align in mobile view */
+        width: 90%;                  /* Full width with some margin */
+    }
+}

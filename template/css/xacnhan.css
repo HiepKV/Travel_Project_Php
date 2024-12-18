@@ -1,0 +1,102 @@
+/* Tổng quan */
+form {
+    background-color: #ffffff; /* Nền sáng hơn */
+    padding: 30px;
+    width: 100%;
+    max-width: 900px; /* Căn chỉnh lại độ rộng */
+    margin: 50px auto;
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    font-family: 'Arial', sans-serif;
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Chia thành 2 cột đều */
+    gap: 20px; /* Khoảng cách giữa các cột */
+}
+
+/* Tiêu đề */
+h2 {
+    color: #ff4081; /* Màu sắc của tiêu đề vẫn giữ như vậy */
+    text-align: center;
+    grid-column: span 2; /* Tiêu đề chiếm cả hai cột */
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+/* Label */
+label {
+    color: #333; /* Màu chữ đen cho sự dễ đọc */
+    font-size: 14px;
+    margin-bottom: 8px;
+    display: block;
+    font-weight: bold;
+}
+
+/* Các ô input */
+input[type="text"],
+input[type="email"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    border: 1px solid #ddd; /* Border sáng hơn */
+    background-color: #f9f9f9; /* Nền sáng */
+    color: #333; /* Màu chữ đen */
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+/* Hiệu ứng khi focus */
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border: 1px solid #ff4081; /* Đổi màu border khi focus */
+    background-color: #f0f0f0; /* Nền khi focus */
+    outline: none;
+}
+
+/* Placeholder text */
+input::placeholder {
+    color: #aaa; /* Màu sáng cho placeholder */
+}
+
+/* Các input readonly */
+input[readonly] {
+    background-color: #e9e9e9; /* Nền sáng cho các trường readonly */
+}
+
+/* Button */
+button {
+    background-color: #ff4081; /* Màu nền sáng cho button */
+    color: #fff;
+    border: none;
+    padding: 14px;
+    width: 100%;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    margin-top: 15px;
+}
+
+button:hover {
+    background-color: #d5006d; /* Màu nền khi hover */
+}
+
+/* Phần thông báo */
+p {
+    color: #333; /* Màu chữ đen cho phần thông báo */
+    font-size: 14px;
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.6;
+    grid-column: span 2; /* Thông báo chiếm cả 2 cột */
+}
+
+/* Cải tiến khoảng cách cho các phần tử */
+br {
+    clear: both;
+}

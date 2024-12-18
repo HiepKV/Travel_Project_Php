@@ -1,0 +1,252 @@
+/* CSS chung cho tất cả các trang */
+:root {
+    --primary-color: #2196F3;
+    --secondary-color: #FFC107;
+    --success-color: #4CAF50;
+    --danger-color: #f44336;
+    --text-color: #333;
+    --bg-color: #f5f5f5;
+    --card-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* body {
+    font-family: 'Segoe UI', 'Roboto', sans-serif;
+    background: var(--bg-color);
+    margin: 0;
+    padding: 20px;
+    color: var(--text-color);
+} */
+
+/* Styling cho bảng danh sách người dùng */
+.user-table-container {
+    background: rgb(112, 173, 192);
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1400px;
+}
+
+table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin: 20px 0;
+}
+
+th {
+    background: var(--primary-color);
+    color: white;
+    padding: 5px;
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.9em;
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 3px;
+    border-bottom: 1px solid #eee;
+    transition: all 0.3s ease;
+}
+
+tbody tr:hover {
+    background: rgba(33, 150, 243, 0.05);
+    transform: translateY(-2px);
+    box-shadow: var(--card-shadow);
+}
+
+/* Styling cho form chỉnh sửa và phân quyền */
+.form-container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: var(--card-shadow);
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 6px;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(33, 150, 243, 0.2);
+    outline: none;
+}
+
+/* Styling cho các nút */
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-weight: 300;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-primary {
+    background: var(--primary-color);
+    color: white;
+}
+
+.btn-danger {
+    background: var(--danger-color);
+    color: white;
+}
+
+.btn-success {
+    background: var(--success-color);
+    color: white;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* Header styling */
+.page-header {
+    text-align: center;
+    margin-bottom: 20px;
+    color: black;
+    font-size: 1em;
+    font-weight:bold;
+
+}
+
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .form-container {
+        padding: 20px;
+        margin: 20px;
+    }
+    
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+    
+    .button-container {
+        flex-direction: column;
+    }
+    
+    button {
+        width: 100%;
+    }
+}
+.user-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around; /* Điều chỉnh khoảng cách giữa các item */
+}
+
+.user-item {
+    display: flex;
+    flex-direction: column; /* Sắp xếp theo cột */
+    width: calc(33.33% - 20px); /* 3 cột, trừ khoảng cách */
+    margin: 10px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.user-info {
+    flex-grow: 1; /* Cho phép phần nội dung giãn nở */
+    margin-bottom: 10px;
+}
+
+.field {
+    margin-bottom: 5px;
+}
+
+.user-actions {
+    display: flex;
+    justify-content: space-around; /* Các nút cách đều nhau */
+}
+
+/* Responsiveness */
+@media (max-width: 992px) {
+    .user-item {
+        width: calc(50% - 20px); /* 2 cột */
+    }
+}
+
+@media (max-width: 600px) {
+    .user-item {
+        width: calc(100% - 20px); /* 1 cột */
+    }
+    .user-actions{
+        flex-direction: column; /* sắp xếp nút theo cột */
+        align-items: center;
+    }
+}
+/* Thiết lập độ rộng cho ô địa chỉ */
+td:nth-child(6) { /* Giả sử cột địa chỉ là cột thứ 6 */
+    width: 250px; /* Đặt độ rộng cố định cho ô địa chỉ */
+    white-space: nowrap; /* Giữ nội dung trong ô không bị bẻ dòng */
+    overflow: hidden;
+    text-overflow: ellipsis; /* Thêm dấu ba chấm nếu văn bản quá dài */
+}
+
+/* Đảm bảo các nút hành động nằm ngang và không làm ảnh hưởng đến layout */
+td:nth-child(7) {
+    white-space: nowrap; /* Không để các nút bị bẻ dòng */
+}
+
+button {
+    display: inline-block; /* Hiển thị nút nằm ngang */
+    margin-right: 10px; /* Khoảng cách giữa các nút */
+}
+
+button:last-child {
+    margin-right: 0; /* Loại bỏ khoảng cách cho nút cuối cùng */
+}
+
+/* Sửa các nút trong .button-container cho phù hợp với việc hiển thị ngang */
+.button-container {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-start;
+    flex-wrap: nowrap; /* Đảm bảo không bẻ dòng */
+}
+
+/* Đảm bảo các nút không co lại khi màn hình nhỏ */
+@media (max-width: 600px) {
+    td:nth-child(7) {
+        white-space: normal; /* Cho phép các nút xuống dòng nếu cần */
+        text-align: center; /* Căn giữa các nút khi ở chế độ nhỏ */
+    }
+
+    button {
+        width: 100%; /* Các nút sẽ chiếm toàn bộ chiều rộng khi ở màn hình nhỏ */
+        margin-bottom: 10px; /* Khoảng cách giữa các nút */
+    }
+}

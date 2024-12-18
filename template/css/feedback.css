@@ -1,0 +1,126 @@
+/* Định dạng chung cho toàn bộ trang */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f9;
+    margin: 0;
+    padding: 0;
+}
+
+/* Khung chứa toàn bộ nội dung của trang */
+.feedback-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f4f9;
+}
+
+.feedback-container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 900px;
+    margin: 50px;
+}
+
+/* Tiêu đề chính */
+.feedback-title {
+    text-align: center;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+/* Tiêu đề của các phần trong trang */
+h3 {
+    color: #333;
+    font-size: 20px;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ed0080;
+    padding-bottom: 5px;
+}
+
+/* Bảng danh sách đánh giá */
+.feedback-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.feedback-table th, .feedback-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.feedback-table th {
+    background-color: #f8f8f8;
+    font-weight: bold;
+}
+
+/* Các form chỉnh sửa đánh giá */
+.feedback-update-form {
+    margin: 10px 0;
+}
+
+.feedback-update-form select,
+.feedback-update-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.feedback-update-form button {
+    background-color: #ed0080;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.feedback-update-form button:hover {
+    background-color: #d9006c;
+}
+
+/* Form gửi đánh giá mới */
+.feedback-new-form select,
+.feedback-new-form textarea {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.feedback-new-form button {
+    background-color: #ed0080;
+    color: #fff;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.feedback-new-form button:hover {
+    background-color: #d9006c;
+}
+
+/* Liên kết quay lại */
+.feedback-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: #ed0080;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.feedback-link:hover {
+    text-decoration: underline;
+}
