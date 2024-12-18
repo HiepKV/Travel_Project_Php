@@ -21,7 +21,6 @@ if ($result = $stmt->get_result()) {
 if (!isset($user)) {
     $user = ['Email' => null];
 }
-
 ?>
 <link rel="stylesheet" href="../template/css/header.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -72,7 +71,6 @@ if (!isset($user)) {
                         <li><a href="javascript:void(0)" onclick="showLoginAlert();"><i class="fa-solid fa-layer-group"></i> Đánh giá</a></li>
                         <li><a href="javascript:void(0)" onclick="showLoginAlert();"><i class="fa-solid fa-newspaper"></i> Tour</a></li>
                     <?php endif; ?>
-
                 </ul>
 
 
@@ -92,7 +90,7 @@ if (!isset($user)) {
                 <?php else: ?>
                     <!-- Nếu người dùng chưa đăng nhập, hiển thị form đăng nhập -->
                     <li class="taikhoan"><a id="accountLink"><i class="fa-solid fa-user"></i> Tài Khoản</a></li>
-                <?php endif; ?>
+                <?php endif ?>
             </ul>
         </div>
     </div>

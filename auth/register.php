@@ -1,11 +1,7 @@
 <?php
 include 'C:\xampp\htdocs\projectphp\includes\connect.php';
-
 // Xác thực mật khẩu
-function validatePassword($matKhau, $xacnhanmatkhau) {
-    if ($matKhau != $xacnhanmatkhau) {
-        return "Mật khẩu và xác nhận mật khẩu không khớp.";
-    }
+function validatePassword($matKhau) {
     if (strlen($matKhau) < 6) {
         return "Độ dài mật khẩu phải ít nhất 6 ký tự.";
     }
@@ -14,14 +10,6 @@ function validatePassword($matKhau, $xacnhanmatkhau) {
     $So = preg_match('@[0-9]@', $matKhau);
     if (!$chuHoa || !$chuThuong || !$So) {
         return "Yêu cầu mật khẩu của bạn phải có cả chữ in hoa, chữ thường và số!";
-    }
-    return ''; // Không có lỗi
-}
-
-// Xác thực số điện thoại
-function validatePhoneNumber($sdt) {
-    if (!preg_match('@[0-9]@', $sdt) || strlen($sdt) != 10) {
-        return "Định dạng số điện thoại của bạn chưa đúng.";
     }
     return ''; // Không có lỗi
 }
@@ -64,10 +52,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($password_error) {
             echo "<script>alert('$password_error');</script>";
         } else {
-            $phone_error = validatePhoneNumber($_POST['phone']);
-            if ($phone_error) {
-                echo "<script>alert('$phone_error');</script>";
-            } else {
                 if (registerUser($conn, $name, $phone, $email, $address, $role, $password)) {
                     echo "<script>
                             document.addEventListener('DOMContentLoaded', function() {
@@ -80,8 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }
-    $stmt_check->close();
-}
+    // $stmt_check->close();
 ?>
 
 <!DOCTYPE html>
@@ -383,16 +366,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         });
         // Form validation
-        document.getElementById('registerForm').addEventListener('submit', function(event) {
-            const phone = document.getElementById('phone').value;
-            const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
+        // document.getElementById('registerForm').addEventListener('submit', function(event) {
+        //     const phone = document.getElementById('phone').value;
+        //     const phoneRegex = /(84|0[3|5|7|8|9])+([0-9]{8})\b/;
 
-            if (!phoneRegex.test(phone)) {
-                event.preventDefault();
-                alert('Vui lòng nhập số điện thoại hợp lệ!');
-                return false;
-            }
-        });
+        //     if (!phoneRegex.test(phone)) {
+        //         event.preventDefault();
+        //         alert('Vui lòng nhập số điện thoại hợp lệ!');
+        //         return false;
+        //     }
+        // });
     </script>
 </body>
 

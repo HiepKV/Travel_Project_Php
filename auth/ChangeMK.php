@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/projectphp/includes/connect.php';
 include('../layout/header.php');
@@ -45,10 +46,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $update_stmt->bind_param("si", $hashed_password, $user_id);
 
             if ($update_stmt->execute()) {
-                $_SESSION['password_changed'] = true;
-                
-                session_unset();
-                session_destroy();
                 header("Location: ./login.php");
                 exit();
             } else {
@@ -59,6 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $error = "Không tìm thấy thông tin tài khoản.";
     }
 }
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -128,7 +126,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (password.match(/[A-Z]+/)) strength++;
                 if (password.match(/[0-9]+/)) strength++;
                 if (password.match(/[$@#&!]+/)) strength++;
-
+                
                 strengthDiv.innerHTML = strength < 2 ? 'Mật khẩu yếu' :
                                         strength < 4 ? 'Mật khẩu trung bình' : 
                                         'Mật khẩu mạnh';

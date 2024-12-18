@@ -1,4 +1,5 @@
 <?php
+ob_start();
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/projectphp/includes/connect.php';
 include('../layout/header.php');
@@ -30,7 +31,7 @@ function validatePassword($password)
     return $errors;
 }
 
-// kiểm tra mật khẩu mới không được trùng mật khẩu cũ
+// Kiểm tra mật khẩu mới không được trùng mật khẩu cũ
 function isNewPasswordDifferent($conn, $account_id, $new_password)
 {
     $stmt = $conn->prepare("SELECT Password FROM account WHERE AccountID = ?");
@@ -49,7 +50,6 @@ function isNewPasswordDifferent($conn, $account_id, $new_password)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     date_default_timezone_set("Asia/Ho_Chi_Minh");
 
-    // quên mật khẩu
     if (isset($_POST['email'])) {
         $email = $_POST['email'];
         $stmt = $conn->prepare("SELECT AccountID FROM account WHERE Email = ?");
@@ -58,45 +58,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $result = $stmt->get_result();
 
         if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            $account_id = $row['AccountID'];
+
+            // Tạo token reset password
             $token = bin2hex(random_bytes(32));
             $expiry = date("Y-m-d H:i:s", strtotime("+1 hour"));
 
-            $stmt = $conn->prepare("UPDATE account SET reset_token = ?, token_expiry = ? WHERE Email = ?");
-            $stmt->bind_param("sss", $token, $expiry, $email);  
+            $stmt = $conn->prepare("UPDATE account SET reset_token = ?, token_expiry = ? WHERE AccountID = ?");
+            $stmt->bind_param("ssi", $token, $expiry, $account_id);
             $stmt->execute();
 
-            echo "
-<div class='notification-container'>
-    <div class='notification success'>
-        <div class='notification-icon'>✉️</div>
-        <div class='notification-content'>
-            <h3>Yêu cầu đặt lại mật khẩu</h3>
-            <p>Một liên kết đặt lại mật khẩu đã được gửi đến địa chỉ email của bạn.</p>
-            <div class='notification-link'>
-                <a href='?token=$token'>Nhấp vào đây để đặt lại mật khẩu</a>
-            </div>
-            <small>Liên kết sẽ hết hạn sau 1 giờ</small>
-        </div>
-    </div>
-</div>
-";
+            // Chuyển sang form nhập mật khẩu mới
+            header("Location: ?token=$token");
+            exit();
         } else {
-            echo "
-<div class='notification-container'>
-    <div class='notification success'>
-        <div class='notification-icon'>✉️</div>
-        <div class='notification-content'>
-            <p>Email không tồn tại trong hệ thống.</p>
-            </div>
-            <small>Liên kết sẽ hết hạn sau 1 giờ</small>
-        </div>
-    </div>
-</div>
-";
+            echo "<p>Email không tồn tại trong hệ thống.</p>";
         }
-    }
-    // đặt lại mật khẩu
-    elseif (isset($_POST['password']) && isset($_POST['token'])) {
+    } elseif (isset($_POST['password']) && isset($_POST['token'])) {
         $token = $_POST['token'];
         $new_password = $_POST['password'];
 
@@ -120,53 +99,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $row = $result->fetch_assoc();
                 $account_id = $row['AccountID'];
 
-                // mật khẩu mới không được trùng mật khẩu cũ
+                // Mật khẩu mới không được trùng mật khẩu cũ
                 if (isNewPasswordDifferent($conn, $account_id, $new_password)) {
                     $stmt = $conn->prepare("UPDATE account SET Password = ?, reset_token = NULL, token_expiry = NULL WHERE AccountID = ?");
                     $stmt->bind_param("si", $hashed_password, $account_id);
                     $stmt->execute();
 
-                    echo "<div class='notification-container'>
-    <div class='notification success'>
-        <div class='notification-icon'>✉️</div>
-        <div class='notification-content'>
-        <p>Mật khẩu đã được đặt lại thành công!</p>
-            </div>
-            <small>Liên kết sẽ hết hạn sau 1 giờ</small>
-        </div>
-    </div>
-</div>
-";
                     header("Location: login.php");
                     exit();
                 } else {
-                    echo "<div class='notification-container'>
-    <div class='notification success'>
-        <div class='notification-icon'>✉️</div>
-        <div class='notification-content'>
-           <p>Mật khẩu mới không được trùng với mật khẩu cũ!</p>
-            </div>
-            <small>Liên kết sẽ hết hạn sau 1 giờ</small>
-        </div>
-    </div>
-</div>";
+                    echo "<p>Mật khẩu mới không được trùng với mật khẩu cũ!</p>";
                 }
             } else {
-                echo "<div class='notification-container'>
-    <div class='notification success'>
-        <div class='notification-icon'>✉️</div>
-        <div class='notification-content'>
-           <p>Token không hợp lệ hoặc đã hết hạn.</p>
-            </div>
-            <small>Liên kết sẽ hết hạn sau 1 giờ</small>
-        </div>
-    </div>
-</div>
-";
+                echo "<p>Token không hợp lệ hoặc đã hết hạn.</p>";
             }
         }
     }
 }
+ob_end_flush();
 ?>
 
 <!DOCTYPE html>
@@ -187,7 +137,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <form method="POST" action="">
                 <label for="email">Email:</label>
                 <input type="email" id="email" name="email" required>
-                <button type="submit">Gửi yêu cầu</button>
+                <button type="submit">Xác nhận</button>
             </form>';
         } elseif (isset($_GET['token'])) {
             $token = $_GET['token'];
@@ -197,7 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <input type='hidden' name='token' value='$token'>
                 <label for='password'>Mật khẩu mới:</label>
                 <input type='password' id='password' name='password' required>
-                <button type='submit'>Đặt lại mật khẩu</button>
+                <button type='submit'>Đặt lại</button>
             </form>";
         }
         ?>
