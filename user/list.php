@@ -48,7 +48,7 @@ $result = $conn->query($sql);
                 <table class="min-w-full bg-white">
                     <thead class="bg-gray-100 border-b">
                         <tr>
-                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">UserID</th>
+                            <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Tên người dùng</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
                             <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Vai trò</th>
@@ -80,6 +80,7 @@ $result = $conn->query($sql);
                                     >
                                         Xóa
                                     </button>
+                                    
                                     <button 
                                         onclick="location.href='?page=user&action=role&id=<?= $row['UserID'] ?>'"
                                         class="text-blue-600 hover:text-blue-900 bg-blue-100 px-3 py-1 rounded-md transition duration-300"

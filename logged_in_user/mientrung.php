@@ -1,7 +1,6 @@
 <?php
 session_start();
 include '../includes/connect.php';
-// Ensure case-insensitive comparison and use prepared statement
 $query = "SELECT * FROM Tours WHERE LOWER(vung_mien) = LOWER(?) ORDER BY tour_id ASC";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "s", $region);

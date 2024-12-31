@@ -1,15 +1,45 @@
 <?php
 include("../includes/connect.php");
 
-// Kiểm tra và gán giá trị mặc định
-$page_number = isset($_GET['page_number']) ? (int)$_GET['page_number'] : 1;
-$filter_tour = isset($_GET['tour']) ? $_GET['tour'] : '';
-$filter_rating = isset($_GET['rating']) ? $_GET['rating'] : '';
+
+$page_number = isset($_GET['page_number']) ? max(1, (int)$_GET['page_number']) : 1;
+$filter_tour = isset($_GET['tour']) ? trim($_GET['tour']) : '';
+$filter_rating = isset($_GET['rating']) ? trim($_GET['rating']) : '';
 
 $limit = 3;
 $offset = ($page_number - 1) * $limit;
 
-// Truy vấn feedback
+
+$base_query = "FROM 
+    feed_back fb
+JOIN 
+    Tours t ON fb.tour_id = t.tour_id
+JOIN 
+    users u ON fb.UserID = u.UserID
+JOIN 
+    account a ON u.UserID = a.UserID
+WHERE 1=1";
+
+
+$filter_params = [];
+$filter_types = '';
+
+if (!empty($filter_tour)) {
+    $base_query .= " AND t.tour_name LIKE ?";
+    $filter_params[] = "%$filter_tour%";
+    $filter_types .= 's';
+}
+
+if (!empty($filter_rating)) {
+    $base_query .= " AND fb.rating = ?";
+    $filter_params[] = $filter_rating;
+    $filter_types .= 'i';
+}
+
+
+$count_query = "SELECT COUNT(*) as total $base_query";
+
+
 $query = "SELECT 
     fb.id_fb, 
     t.tour_name, 
@@ -20,51 +50,43 @@ $query = "SELECT
     fb.feedback, 
     fb.rating, 
     fb.created_at 
-FROM 
-    feed_back fb
-JOIN 
-    Tours t ON fb.tour_id = t.tour_id
-JOIN 
-    users u ON fb.UserID = u.UserID
-JOIN 
-    account a ON u.UserID = a.UserID
-WHERE 1=1";
+$base_query
+ORDER BY fb.created_at DESC
+LIMIT $limit OFFSET $offset";
 
-// Thêm điều kiện lọc
-if (!empty($filter_tour)) {
-    $query .= " AND t.tour_name LIKE '%" . mysqli_real_escape_string($conn, $filter_tour) . "%'";
+if (!empty($filter_params)) {
+    $count_stmt = $conn->prepare($count_query);
+    $count_stmt->bind_param($filter_types, ...$filter_params);
+    $count_stmt->execute();
+    $count_result = $count_stmt->get_result();
+} else {
+    $count_result = mysqli_query($conn, $count_query);
 }
-
-if (!empty($filter_rating)) {
-    $query .= " AND fb.rating = " . (int)$filter_rating;
-}
-
-$query .= " ORDER BY fb.created_at DESC LIMIT $limit OFFSET $offset";
-
-$result = mysqli_query($conn, $query);
-
-// Đếm tổng số feedback
-$count_query = "SELECT COUNT(*) as total FROM feed_back fb
-                JOIN Tours t ON fb.tour_id = t.tour_id
-                JOIN users u ON fb.UserID = u.UserID
-                JOIN account a ON u.UserID = a.UserID
-                WHERE 1=1";
-
-// Thêm điều kiện lọc
-if (!empty($filter_tour)) {
-    $count_query .= " AND t.tour_name LIKE '%" . mysqli_real_escape_string($conn, $filter_tour) . "%'";
-}
-
-if (!empty($filter_rating)) {
-    $count_query .= " AND fb.rating = " . (int)$filter_rating;
-}
-
-$count_result = mysqli_query($conn, $count_query);
 $count_row = mysqli_fetch_assoc($count_result);
 $total_feedbacks = $count_row['total'];
 
-// Số trang
 $total_pages = ceil($total_feedbacks / $limit);
+
+if (!empty($filter_params)) {
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param($filter_types, ...$filter_params);
+    $stmt->execute();
+    $result = $stmt->get_result();
+} else {
+    $result = mysqli_query($conn, $query);
+}
+
+function generatePageLink($page, $filter_tour, $filter_rating) {
+    $link = "dashboard.php?page=reviews";
+    if (!empty($filter_tour)) {
+        $link .= "&tour=" . urlencode($filter_tour);
+    }
+    if (!empty($filter_rating)) {
+        $link .= "&rating=" . urlencode($filter_rating);
+    }
+    $link .= "&page_number=" . $page;
+    return $link;
+}
 ?>
 
 <!DOCTYPE html>
@@ -90,7 +112,6 @@ $total_pages = ceil($total_feedbacks / $limit);
                 <h1 class="text-2xl font-bold text-gray-800">Quản Lý Feedback</h1>
             </div>
 
-            <!-- Filter Section -->
             <div class="px-6 py-4 bg-gray-50">
                 <form method="GET" action="dashboard.php" class="flex space-x-4">
                     <input type="hidden" name="page" value="reviews">
@@ -118,7 +139,6 @@ $total_pages = ceil($total_feedbacks / $limit);
                 </form>
             </div>
 
-            <!-- Filter Result Alert -->
             <?php if (!empty($filter_tour) || !empty($filter_rating)): ?>
                 <div class="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4" role="alert">
                     <p class="font-bold">Kết quả lọc:</p>
@@ -131,7 +151,6 @@ $total_pages = ceil($total_feedbacks / $limit);
                 </div>
             <?php endif; ?>
 
-            <!-- Feedback Table -->
             <div class="overflow-x-auto">
                 <table class="w-full">
                     <thead class="bg-gray-100 border-b">
@@ -175,24 +194,41 @@ $total_pages = ceil($total_feedbacks / $limit);
                 </table>
             </div>
 
-            <!-- Pagination -->
-            <div class="px-6 py-4 bg-white flex justify-center">
+            <!-- Phân trang mới -->
+            <div class="px-6 py-4 bg-white flex justify-between items-center">
+                <div class="text-gray-600">
+                    Tổng số: <?php echo $total_feedbacks; ?> bản ghi
+                </div>
                 <nav>
                     <ul class="flex space-x-2">
-                        <?php for ($i = 1; $i <= $total_pages; $i++): ?>
-                            <li>
-                                <a href="dashboard.php?page=reviews
-                                    <?php 
-                                    echo !empty($filter_tour) ? '&tour=' . urlencode($filter_tour) : '';
-                                    echo !empty($filter_rating) ? '&rating=' . $filter_rating : ''; 
-                                    echo '&page_number=' . $i;
-                                    ?>" 
-                                   class="px-3 py-2 <?php echo $page_number == $i ? 'bg-blue-500 text-white' : 'bg-white text-gray-500 hover:bg-gray-50'; ?> 
-                                   border border-gray-300 rounded-md">
-                                    <?php echo $i; ?>
+                        <?php 
+                        // Nút Previous
+                        if ($page_number > 1) {
+                            echo '<li><a href="' . generatePageLink($page_number - 1, $filter_tour, $filter_rating) . '" class="px-3 py-2 bg-white text-gray-500 hover:bg-gray-50 border border-gray-300 rounded-md">Previous</a></li>';
+                        }
+
+                        // Hiển thị các trang
+                        $start = max(1, $page_number - 2);
+                        $end = min($total_pages, $page_number + 2);
+
+                        for ($i = $start; $i <= $end; $i++) {
+                            $active_class = $page_number == $i 
+                                ? 'bg-blue-500 text-white' 
+                                : 'bg-white text-gray-500 hover:bg-gray-50';
+                            
+                            echo '<li>
+                                <a href="' . generatePageLink($i, $filter_tour, $filter_rating) . '" 
+                                   class="px-3 py-2 ' . $active_class . ' border border-gray-300 rounded-md">
+                                    ' . $i . '
                                 </a>
-                            </li>
-                        <?php endfor; ?>
+                            </li>';
+                        }
+
+                        // Nút Next
+                        if ($page_number < $total_pages) {
+                            echo '<li><a href="' . generatePageLink($page_number + 1, $filter_tour, $filter_rating) . '" class="px-3 py-2 bg-white text-gray-500 hover:bg-gray-50 border border-gray-300 rounded-md">Next</a></li>';
+                        }
+                        ?>
                     </ul>
                 </nav>
             </div>

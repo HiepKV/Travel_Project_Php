@@ -12,7 +12,7 @@ if (!defined('DB_NAME')) {
     define('DB_NAME', 'managementtour');
 }
 if (!defined('DB_PORT')) {
-    define('DB_PORT', '3308');
+    define('DB_PORT', '3306');
 }
 
 $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME, DB_PORT);

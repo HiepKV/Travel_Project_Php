@@ -1,14 +1,24 @@
 <?php
 session_start();
 include '../includes/connect.php';
-// Ensure case-insensitive comparison and use prepared statement
 $query = "SELECT * FROM Tours WHERE LOWER(vung_mien) = LOWER(?) ORDER BY tour_id ASC";
 $stmt = mysqli_prepare($conn, $query);
 mysqli_stmt_bind_param($stmt, "s", $region);
 $region = 'Miền Bắc';
 mysqli_stmt_execute($stmt);
 $products = mysqli_stmt_get_result($stmt);
-
+if (isset($_SESSION['UserID'])) {
+    $user_id = $_SESSION['UserID'];
+    $stmt_user = $conn->prepare("SELECT Name, Phone, Address FROM users WHERE UserID = ?");
+    $stmt_user->bind_param("i", $user_id);
+    $stmt_user->execute();
+    $user_result = $stmt_user->get_result();
+    if ($user_result->num_rows > 0) {
+        $user = $user_result->fetch_assoc();
+    }
+} else {
+    $user = null; // Handle case when user is not logged in
+}
 ?>
 <?php include('../layout/header.php'); ?>
 <!DOCTYPE html>

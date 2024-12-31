@@ -261,9 +261,6 @@ if (session_status() == PHP_SESSION_NONE) {
                 // Lấy thông tin về page và action từ URL
                 $page = isset($_GET['page']) ? $_GET['page'] : 'dashboard';
                 $action = isset($_GET['action']) ? $_GET['action'] : 'list';
-
-
-
                 // Điều hướng theo page
                 switch ($page) {
                     case 'dashboard':
@@ -305,7 +302,6 @@ if (session_status() == PHP_SESSION_NONE) {
                     case 'reviews':
                         include 'feedback.php';
                         break;
-
                     default:
                         include 'dashboard.php';
                 }

@@ -126,8 +126,6 @@ include('../layout/header.php');
                     <input style="color: rgb(255, 139, 164);" type="hidden" name="price" value="<?= htmlspecialchars($tour['price']) ?>">
                     <hr>
                 </div>
-
-
                 <div>
                     <button type="submit" id="button123">Đặt Tour</button>
                 </div>
